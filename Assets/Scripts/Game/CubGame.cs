@@ -2,10 +2,11 @@
 
 public class CubGame : MonoBehaviour {
 
-    public int _timeLeft = 30;
+    static float _timeLeft = 30.0f;
     public CharacterController _controller;
     int direct = 0;
     public Vector3 dir = Vector3.zero;
+    private static bool _destroyHelper = false;
 
     void Start()
     {
@@ -15,11 +16,11 @@ public class CubGame : MonoBehaviour {
 
     void Update()
     {
-
-        if (Time.timeSinceLevelLoad < _timeLeft)
+        //Time.timeSinceLevelLoad;
+        Reward.Instance._timeHelper = _timeLeft - Time.timeSinceLevelLoad;
+        Debug.Log("Update = " + Reward.Instance._timeHelper);
+        if (Reward.Instance._timeHelper > 0)
         {
-            Reward.Instance._timeHelper = 30 - Time.timeSinceLevelLoad;
-            
             dir = transform.TransformDirection(dir);
             dir.x = transform.position.x - 1;
 
@@ -39,21 +40,28 @@ public class CubGame : MonoBehaviour {
         }
         else
         {
+            _destroyHelper = true;
             Reward.Instance.ResultGame();
         }
     }
 
     void OnDestroy()
     {
-        Singleton.Instance._currentDistance = (int)(transform.position.x * (-1));
-        Singleton.Instance._currentCoin += Reward.Instance._currentCoin;
-        Singleton.Instance._currentCrystal += Reward.Instance._currentCrystal;
+        if (_destroyHelper)
+        {
+            Debug.Log("Destroy = " + Reward.Instance._timeHelper);
+            Singleton.Instance._currentDistance = (int)(transform.position.x * (-1));
+            Singleton.Instance._currentCoin += Reward.Instance._currentCoin;
+            Singleton.Instance._currentCrystal += Reward.Instance._currentCrystal;
+        }
     }
 
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Block")
         {
+            Debug.Log("Hit = " + Reward.Instance._timeHelper);
+            _timeLeft = Reward.Instance._timeHelper;
             Singleton.Instance._currentDeath += 1;
             Application.LoadLevel(Singleton.Instance._chooseMap);
         }

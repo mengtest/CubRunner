@@ -8,7 +8,6 @@ public class MenuFooterContext : Context
 
     public MenuFooterContext(MainContext mainContext)
     {
-        Debug.Log("Visible = footer");
         _mainContext = mainContext;
     }
 

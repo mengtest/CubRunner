@@ -27,7 +27,7 @@ public class MainContext : Context {
     public MapStartBodyContext MapStartBody { get; set; }
     [Inject]
     public MatchScoreScreenBodyContext MatchScoreScreenBody { get; set; }
-   // [Inject]
+
     public MainContext()
     {
     }
@@ -57,17 +57,12 @@ public class MainContext : Context {
 
         ChooseCub.VisibleChooseCub = true;
         ChooseCubBody.VisibleChooseCubBody = true;
-        if (_cubDefault)
-        {
-            Singleton.Instance._currentCube = "WhiteCube";
-            ChooseCubBody.CurrentSpeed = Singleton.Instance._currentSpeedWhiteCube;
-            Singleton.Instance._currentSpeedCube = Singleton.Instance._currentSpeedWhiteCube;
-            _cubDefault = false;
-        }
+
+        DefaultCub();
 
         if (Singleton.Instance._currentCube == "WhiteCube")
             ChooseCubBody.CurrentSpeed = Singleton.Instance._currentSpeedWhiteCube;
-       if (Singleton.Instance._currentCube == "GreenCube")
+        if (Singleton.Instance._currentCube == "GreenCube")
             ChooseCubBody.CurrentSpeed = Singleton.Instance._currentSpeedWhiteCube;
         if (Singleton.Instance._currentCube == "RedCube")
             ChooseCubBody.CurrentSpeed = Singleton.Instance._currentSpeedWhiteCube;
@@ -83,6 +78,9 @@ public class MainContext : Context {
 
         MapStartBody.VisibleMapStartBody = true;
         MapStartFooter.VisibleMapStartFooter = true;
+
+        DefaultCub();
+
         if (_mapDefault)
         {
             MapStartBody.VisibleFirstMap = true;
@@ -122,5 +120,16 @@ public class MainContext : Context {
         Body.VisibleBody = true;
         MenuFooter.VisibleMenuFooter = true;
         Header.VisibleHeader = true;
+    }
+
+    private void DefaultCub()
+    {
+        if (_cubDefault)
+        {
+            Singleton.Instance._currentCube = "WhiteCube";
+            ChooseCubBody.CurrentSpeed = Singleton.Instance._currentSpeedWhiteCube;
+            Singleton.Instance._currentSpeedCube = Singleton.Instance._currentSpeedWhiteCube;
+            _cubDefault = false;
+        }
     }
 }
