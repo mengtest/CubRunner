@@ -24,7 +24,8 @@ public class Reward : MonoBehaviour {
         
         Instance = this;
         Instantiate((GameObject)Resources.Load("Prefabs/" + Singleton.Instance._currentCube), StartCubSpawn.position, Quaternion.identity);
-    }
+        //_timeHelper = 1.0f;
+}
 
     void Update () {
 

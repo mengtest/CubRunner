@@ -2,11 +2,11 @@
 
 public class CubGame : MonoBehaviour {
 
-    static float _timeLeft = 30.0f;
+    private static float _timeLeft = 30.0f;
+    private static bool _destroyHelper;
     public CharacterController _controller;
     int direct = 0;
     public Vector3 dir = Vector3.zero;
-    private static bool _destroyHelper = false;
 
     void Start()
     {
@@ -16,11 +16,9 @@ public class CubGame : MonoBehaviour {
 
     void Update()
     {
-        //Time.timeSinceLevelLoad;
-        Reward.Instance._timeHelper = _timeLeft - Time.timeSinceLevelLoad;
-        Debug.Log("Update = " + Reward.Instance._timeHelper);
-        if (Reward.Instance._timeHelper > 0)
+        if (Reward.Instance._timeHelper >= 0)
         {
+            Reward.Instance._timeHelper = _timeLeft - Time.timeSinceLevelLoad;
             dir = transform.TransformDirection(dir);
             dir.x = transform.position.x - 1;
 
@@ -40,19 +38,20 @@ public class CubGame : MonoBehaviour {
         }
         else
         {
-            _destroyHelper = true;
             Reward.Instance.ResultGame();
+            _destroyHelper = true;
         }
     }
 
     void OnDestroy()
     {
-        if (_destroyHelper)
-        {
+        if (_destroyHelper) {
             Debug.Log("Destroy = " + Reward.Instance._timeHelper);
             Singleton.Instance._currentDistance = (int)(transform.position.x * (-1));
             Singleton.Instance._currentCoin += Reward.Instance._currentCoin;
             Singleton.Instance._currentCrystal += Reward.Instance._currentCrystal;
+            _timeLeft = 30.0f;
+            _destroyHelper = false;
         }
     }
 
@@ -60,7 +59,6 @@ public class CubGame : MonoBehaviour {
     {
         if (other.gameObject.tag == "Block")
         {
-            Debug.Log("Hit = " + Reward.Instance._timeHelper);
             _timeLeft = Reward.Instance._timeHelper;
             Singleton.Instance._currentDeath += 1;
             Application.LoadLevel(Singleton.Instance._chooseMap);

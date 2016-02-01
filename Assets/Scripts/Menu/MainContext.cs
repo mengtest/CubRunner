@@ -63,11 +63,11 @@ public class MainContext : Context {
         if (Singleton.Instance._currentCube == "WhiteCube")
             ChooseCubBody.CurrentSpeed = Singleton.Instance._currentSpeedWhiteCube;
         if (Singleton.Instance._currentCube == "GreenCube")
-            ChooseCubBody.CurrentSpeed = Singleton.Instance._currentSpeedWhiteCube;
+            ChooseCubBody.CurrentSpeed = Singleton.Instance._currentSpeedGreenCube;
         if (Singleton.Instance._currentCube == "RedCube")
-            ChooseCubBody.CurrentSpeed = Singleton.Instance._currentSpeedWhiteCube;
+            ChooseCubBody.CurrentSpeed = Singleton.Instance._currentSpeedRedCube;
         if (Singleton.Instance._currentCube == "BlueCube")
-            ChooseCubBody.CurrentSpeed = Singleton.Instance._currentSpeedWhiteCube;
+            ChooseCubBody.CurrentSpeed = Singleton.Instance._currentSpeedBlueCube;
     }
 
     public void VisibleMapStartFooter()
